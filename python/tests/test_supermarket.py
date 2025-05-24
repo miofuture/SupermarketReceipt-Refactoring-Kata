@@ -161,3 +161,23 @@ def test_handle_offers_FIVE_FOR_AMOUNT(setup_cart_FIVE_FOR_AMOUNT):
     receipt = setup_cart_FIVE_FOR_AMOUNT
     assert receipt.discounts[0].description == "5 for 10.0"
     assert receipt.discounts[0].discount_amount == 0.0  # Discount applied
+
+def test_handle_offers_no_offers():
+    """Test case where no offers are applied"""
+    cart = ShoppingCart()
+    catalog = FakeCatalog()
+    gum = Product("gum", ProductUnit.EACH)
+    apples = Product("apples", ProductUnit.KILO)
+
+    catalog.add_product(gum, 2.0)
+    catalog.add_product(apples, 2)  
+
+    cart.add_item_quantity(apples, 2.5)
+    cart.add_item_quantity(gum, 2)
+
+    teller = Teller(catalog)
+    
+    receipt = teller.checks_out_articles_from(cart)
+    
+    assert len(receipt.discounts) == 0
+    assert receipt.total_price() == pytest.approx(9.0, 0.01)  # No discounts applied
