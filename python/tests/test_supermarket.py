@@ -162,6 +162,7 @@ def test_handle_offers_FIVE_FOR_AMOUNT(setup_cart_FIVE_FOR_AMOUNT):
     assert receipt.discounts[0].description == "5 for 10.0"
     assert receipt.discounts[0].discount_amount == 0.0  # Discount applied
 
+#@pytest.mark.skip(reason="Skipping this test for now")
 def test_handle_offers_no_offers():
     """Test case where no offers are applied"""
     cart = ShoppingCart()
@@ -181,3 +182,42 @@ def test_handle_offers_no_offers():
     
     assert len(receipt.discounts) == 0
     assert receipt.total_price() == pytest.approx(9.0, 0.01)  # No discounts applied
+
+#@pytest.mark.skip(reason="Skipping this test for now")
+def test_handle_offers_empty_cart():
+    """Test case where the cart is empty"""
+    cart = ShoppingCart()
+    catalog = FakeCatalog()
+    
+    teller = Teller(catalog)
+    
+    receipt = teller.checks_out_articles_from(cart)
+    
+    assert len(receipt.items) == 0
+    assert len(receipt.discounts) == 0
+    assert receipt.total_price() == 0.0  # No items, no discounts
+
+def test_handle_offers_multiple_offers():
+    """Test case where multiple offers are applied to the same product"""
+    cart = ShoppingCart()
+    catalog = FakeCatalog()
+    gum = Product("gum", ProductUnit.EACH)
+    apples = Product("apples", ProductUnit.KILO)
+
+    catalog.add_product(gum, 2.0)
+    catalog.add_product(apples, 2)  
+
+    cart.add_item_quantity(apples, 2.5)
+    cart.add_item_quantity(gum, 2)
+
+    teller = Teller(catalog)
+    
+    teller.add_special_offer(SpecialOfferType.TEN_PERCENT_DISCOUNT, apples, 10.0)
+    teller.add_special_offer(SpecialOfferType.THREE_FOR_TWO, gum, 10.0)
+    
+    receipt = teller.checks_out_articles_from(cart)
+    
+    assert len(receipt.discounts) == 2
+    assert receipt.total_price() == pytest.approx(8.0, 0.01)  # Adjusted for both offers
+
+

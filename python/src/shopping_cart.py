@@ -43,7 +43,8 @@ class ShoppingCart:
     def handle_offers(self, receipt, offers, catalog):
         # this block need to be refactored using much neater match case block or more organised If-Elif-Else block
         # i think it is poorly written and needs to be refactored
-        try:                
+        try:
+            discount = None                
             for p in self._product_quantities.keys():
                 quantity = self._product_quantities[p]
                 #breakpoint()
@@ -51,7 +52,7 @@ class ShoppingCart:
                     offer = offers[p]
                     unit_price = catalog.unit_price(p)
                     quantity_as_int = int(quantity)
-                    discount = None
+                    
                     x = 1
                     if offer.offer_type == SpecialOfferType.THREE_FOR_TWO:
                         x = 3
@@ -79,7 +80,8 @@ class ShoppingCart:
                     if offer.offer_type == SpecialOfferType.FIVE_FOR_AMOUNT and quantity_as_int >= 5:
                         discount_total = unit_price * quantity - (
                                     offer.argument * number_of_x + quantity_as_int % 5 * unit_price)
-                        discount = Discount(p, str(x) + " for " + str(offer.argument), -discount_total)                    
+                        discount = Discount(p, str(x) + " for " + str(offer.argument), -discount_total)
+                    #breakpoint()                    
                     if discount:
                         receipt.add_discount(discount)
                     
