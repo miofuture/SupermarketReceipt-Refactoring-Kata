@@ -1,13 +1,10 @@
 import pytest
-
 from model_objects import Product, SpecialOfferType, ProductUnit, Offer
 from shopping_cart import ShoppingCart
 from teller import Teller
 from tests.fake_catalog import FakeCatalog
 from catalog import SupermarketCatalog
 from receipt import Receipt
-
-
 
 @pytest.fixture
 def setup_cart_TEN_PERCENT_DISCOUNT():
@@ -132,36 +129,31 @@ def setup_cart_TWO_FOR_AMOUNT():
 
 def test_handle_offers_TEN_PERCENT_DISCOUNT(setup_cart_TEN_PERCENT_DISCOUNT):        
     receipt = setup_cart_TEN_PERCENT_DISCOUNT
-    assert receipt.discounts[0] == -1.00
+    assert receipt.discounts[0] == pytest.approx(-1.00)
     assert receipt.discounts[0].description == "10% off"
-    assert receipt.discounts[0].amount == -0.20  # 10% off on total
+    assert receipt.discounts[0].amount == pytest.approx(-0.20)  # 10% off on total
     
 
 def test_handle_offers_THREE_FOR_TWO(setup_cart_THREE_FOR_TWO):
     receipt = setup_cart_THREE_FOR_TWO
-    assert receipt.discounts[0] == -1.00
+    assert receipt.discounts[0] == pytest.approx(-1.00)
     assert receipt.discounts[0].description == "3 for 2" 
-    assert receipt.discounts[0].amount == -2.00  # Discount applied
+    assert receipt.discounts[0].amount == pytest.approx(-2.00)  # Discount applied
 
 
 def test_handle_offers_TWO_FOR_AMOUNT(setup_cart_TWO_FOR_AMOUNT):
     receipt = setup_cart_TWO_FOR_AMOUNT
-    assert receipt.discounts[0] == -1.00
+    assert receipt.discounts[0] == pytest.approx(-1.00)
     assert receipt.discounts[0].description == "2 for 1.50"
-    assert receipt.discounts[0].amount == -0.50  # Discount applied
+    assert receipt.discounts[0].amount == pytest.approx(-0.50)  # Discount applied
 
 def test_handle_offers_FIVE_FOR_AMOUNT(setup_cart_FIVE_FOR_AMOUNT):
     receipt = setup_cart_FIVE_FOR_AMOUNT
-    assert receipt.discounts[0] == -1.00
+    assert receipt.discounts[0] == pytest.approx(-1.00)
     assert receipt.discounts[0].description == "5 for 4.00"
-    assert receipt.discounts[0].amount == -1.00  # Discount applied
+    assert receipt.discounts[0].amount == pytest.approx(-1.00)  # Discount applied
 
 
-# def test_add_item(setup_cart):
-#     cart, catalog, product, receipt, offers = setup_cart
-#     cart.add_item(Product("apples", ProductUnit.EACH))
-#     assert cart.items[0].product.name == "apples"
-#     assert cart.product_quantities['apples'] == 1.0    
 
 
 def test_ten_percent_discount():
@@ -190,3 +182,8 @@ def test_ten_percent_discount():
     assert 2.5 == receipt_item.quantity
 
 
+# def test_add_item(setup_cart):
+#     cart, catalog, product, receipt, offers = setup_cart
+#     cart.add_item(Product("apples", ProductUnit.EACH))
+#     assert cart.items[0].product.name == "apples"
+#     assert cart.product_quantities['apples'] == 1.0    
