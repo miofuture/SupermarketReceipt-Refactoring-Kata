@@ -15,7 +15,7 @@ class Receipt:
     def total_price(self):
         total = 0
         for item in self.items:
-            total += item.total_price
+            total += item.total_price            
         for discount in self.discounts:
             total += discount.discount_amount
         return total
