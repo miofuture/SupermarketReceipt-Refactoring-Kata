@@ -1,6 +1,6 @@
 import pytest
 
-from model_objects import Product, SpecialOfferType, ProductUnit
+from model_objects import Product, SpecialOfferType, ProductUnit, Offer
 from shopping_cart import ShoppingCart
 from teller import Teller
 from tests.fake_catalog import FakeCatalog
@@ -35,7 +35,6 @@ def setup_cart_TEN_PERCENT_DISCOUNT():
     receipt = teller.checks_out_articles_from(cart)
     
     receipt.add_discount(-1.00)  
-    product = apples
     return receipt    
 
 @pytest.fixture
@@ -64,7 +63,6 @@ def setup_cart_FIVE_FOR_AMOUNT():
     offers[gum] = Offer(SpecialOfferType.TEN_PERCENT_DISCOUNT, gum, 10.0)
     offers[apples] = Offer(SpecialOfferType.TEN_PERCENT_DISCOUNT, apples, 10.0)
     receipt.add_discount(-1.00)  
-    product = apples
     return receipt    
 
 @pytest.fixture
@@ -93,7 +91,6 @@ def setup_cart_THREE_FOR_TWO():
     offers[gum] = Offer(SpecialOfferType.THREE_FOR_TWO, gum, 10.0)
     offers[apples] = Offer(SpecialOfferType.THREE_FOR_TWO, apples, 10.0)
     receipt.add_discount(-1.00)  
-    product = apples
     return receipt    
 
 @pytest.fixture
@@ -122,7 +119,6 @@ def setup_cart_TWO_FOR_AMOUNT():
     offers[gum] = Offer(SpecialOfferType.TWO_FOR_AMOUNT, gum, 10.0)
     offers[apples] = Offer(SpecialOfferType.TWO_FOR_AMOUNT, apples, 10.0)
     receipt.add_discount(-1.00)  
-    product = apples
     return receipt
     
     """
