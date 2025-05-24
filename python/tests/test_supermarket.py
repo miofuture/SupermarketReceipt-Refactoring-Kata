@@ -4,15 +4,10 @@ from model_objects import Product, SpecialOfferType, ProductUnit
 from shopping_cart import ShoppingCart
 from teller import Teller
 from tests.fake_catalog import FakeCatalog
-
-
-import pytest
-from shopping_cart import ShoppingCart
-from model_objects import Product, SpecialOfferType, ProductUnit, Offer
 from catalog import SupermarketCatalog
 from receipt import Receipt
-from tests.fake_catalog import FakeCatalog
-from teller import Teller
+
+
 
 @pytest.fixture
 def setup_cart_TEN_PERCENT_DISCOUNT():
