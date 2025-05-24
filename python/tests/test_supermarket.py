@@ -124,6 +124,7 @@ def setup_cart_TWO_FOR_AMOUNT():
     TWO_FOR_AMOUNT
     """
 
+#@pytest.mark.skip(reason="Skipping this test for now")
 def test_handle_offers_TEN_PERCENT_DISCOUNT(setup_cart_TEN_PERCENT_DISCOUNT):        
     receipt = setup_cart_TEN_PERCENT_DISCOUNT
     assert len(receipt.discounts) == 2
@@ -142,7 +143,7 @@ def test_handle_offers_TEN_PERCENT_DISCOUNT(setup_cart_TEN_PERCENT_DISCOUNT):
     #assert receipt_item.product == Product("gum", ProductUnit.EACH)
 
     
-
+#@pytest.mark.skip(reason="Skipping this test for now")
 def test_handle_offers_THREE_FOR_TWO(setup_cart_THREE_FOR_TWO):
     receipt = setup_cart_THREE_FOR_TWO
     #breakpoint()
